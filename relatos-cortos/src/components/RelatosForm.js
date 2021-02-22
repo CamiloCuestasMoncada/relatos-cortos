@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
 
 const RelatosForm = (props) => {
@@ -40,17 +40,20 @@ const RelatosForm = (props) => {
       }, []);*/
 
   const ordenRelatos = async () => {
-    let llego = await getOrdenRelatos();
-   
-      console.log(llego+"hola");
+    let getNumMayor = await getOrdenRelatos();
+   if(props.currentId===''){
+    console.log(getNumMayor+"hola");
      
-      //values.orden=== "0" ? values.orden = 1 : values.orden = await Number(llego) + 1;
-      values.orden = await Number(llego) + 1;
+    //values.orden=== "0" ? values.orden = 1 : values.orden = await Number(llego) + 1;
+    values.orden = await Number(getNumMayor) + 1;
+   }
+      
     
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     await ordenRelatos();
     //console.log(ordenohp())
 
@@ -58,6 +61,21 @@ const RelatosForm = (props) => {
 
     setValues({ nombre: "", relato: "", orden: values.orden });
   };
+
+const getRelatoById = async (id) => {
+ const doc = await db.collection("relatos").doc(id).get();
+ setValues({...doc.data()})
+ console.log(doc.data())
+}
+
+useEffect(()=>{
+  if(props.currentId === ""){
+    setValues({...initialStateValues});
+  }else{
+   getRelatoById(props.currentId);
+  }
+},[props.currentId]);
+
 
   return (
     <form className="card card-body" onSubmit={handleSubmit}>
@@ -90,7 +108,7 @@ const RelatosForm = (props) => {
         ></textarea>
       </div>
 
-      <button className="btn btn-info btn-clock">Enviar</button>
+      <button className="btn btn-info btn-clock">{props.currentId==='' ? "Enviar" : "Editar"}</button>
     </form>
   );
 };
