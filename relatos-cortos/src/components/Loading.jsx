@@ -8,11 +8,11 @@ const Loading = () => {
     <div id="loading" className="d-flex justify-content-center align-items-center">
       
         <Loader
-          type="Rings"
+          type="Watch"
           color="#D5F5E3"
           height={100}
           width={100}
-          timeout={7000} //3 secs
+          timeout={3000} //3 secs
         />
       
     </div>

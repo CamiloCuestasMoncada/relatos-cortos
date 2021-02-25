@@ -3,20 +3,17 @@ import "./App.css";
 import './index.css';
 
 import Relatos from "./components/Relatos";
-/*import { useEffect, useState } from "react";
-import Loading from "./components/Loading";*/
+
 
 function App() {
- /* const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 4500);
-  });*/
+ 
   return (
     <div className="container p-4">
       <div className="row">
-        <Relatos/>
+        <Relatos collection="Laberinto"/>
+        <Relatos collection="linea"/>
+        <Relatos collection="navio"/>
+        <Relatos collection="simple"/>
       </div>
     </div>
   );
